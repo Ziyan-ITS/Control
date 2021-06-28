@@ -1,49 +1,5 @@
-import random
 import docplex.mp.model as cpx
-
-
-class Vessel(object):
-    def __init__(self, nums):
-        self.V = nums
-        self.vessels = {'vessel_{}'.format(i): {} for i in range(nums)}
-
-    def generate_arrival_time(self, arrival_rate):
-        # automated generate the arrival time by bosong distribution
-        arrival_time = []
-        for i in range(self.V):
-            name = 'vessel_{}'.format(i)
-            self.vessels[name]['arrival_time'] = arrival_time[i]
-        pass
-
-    def generate_length(self, length_type):
-        # automated generate the length of arrival vessel, length here is measured in number of berth section
-        rand_index = len(length_type)
-        for key in self.vessels:
-            self.vessels[key]['vessel_length'] = length_type[random.randint(0, rand_index)]
-        pass
-
-    def generate_container_volume(self, container_volume):
-        # automated generate the container volume of arrival vessel
-        pass
-
-
-class QuayCrane(object):
-    def __init__(self, nums, Quay_length, *args):
-        super(QuayCrane, self).__init__(*args)
-        self.G = nums
-        self.qc = {'qc_{}'.format(g): {} for g in range(nums)}
-        self.B = Quay_length
-
-    def generate_process_rate(self, process_rate_distribution):
-        rand = len(process_rate_distribution)
-        for key in self.qc:
-            self.qc[key]['processing_rate'] = process_rate_distribution[random.randint(0, rand)]
-
-    def generate_action_range(self):
-        i = self.B / (2 * self.G)
-        for key in self.qc:
-            self.qc[key]['action_range'] = (i - self.B / (2 * self.G), i + self.B / self.G)
-            i = i + self.B / self.G
+from PortSimulation import Vessel, QuayCrane
 
 
 class Berth(object, QuayCrane, Vessel):
